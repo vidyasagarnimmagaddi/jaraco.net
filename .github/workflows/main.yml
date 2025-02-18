@@ -61,6 +61,14 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
           allow-prereleases: true
+      
+      # Install required dependencies for building lxml
+      - name: Install libxml2 and libxslt development packages
+        if: matrix.python == '3.14' && matrix.platform == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-dev libxslt-dev
+          
       - name: Install tox
         run: python -m pip install tox
       - name: Run
